@@ -13,7 +13,7 @@ Class demo.CoffeeMakerRESTserver Extends %CSP.REST
 	}
 	
 	ClassMethod GetAll() As %String
-{
+	{
 	Set tArr = []
 	Set rs = ##class(%SQL.Statement).%ExecDirect(,"SELECT * FROM demo.coffeemaker")
 	While rs.%Next() {
@@ -25,9 +25,11 @@ Class demo.CoffeeMakerRESTserver Extends %CSP.REST
 			"color":   			(rs.%Get("Color")),
 			"numcups":          (rs.%Get("NumCups")),
 			"price":        	(rs.%Get("Price"))
-		})
+			})
+		
+		}
+		Write tArr.%ToJSON()
+
+		Quit $$$OK
 	}
-	
-	quit tArr.%ToJSON()
-}
 }
