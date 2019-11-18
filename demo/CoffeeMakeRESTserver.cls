@@ -8,6 +8,7 @@ Class demo.CoffeeMakerRESTserver Extends %CSP.REST
 		<Map Prefix="/docserver" Foward="%Api.v1.DocServer"/>
 		-->
 		<Route Url="/coffeemakers" Method="GET" Call="GetAll"/>
+		<Route Url="/coffeemaker/:id" Method="GET" Call="GetCoffeeMakerInfo"/>
 		</Routes>
 		
 	}
@@ -32,4 +33,40 @@ Class demo.CoffeeMakerRESTserver Extends %CSP.REST
 
 		Quit $$$OK
 	}
+	
+	ClassMethod GetCoffeeMakerInfo(id As %String) As %Status
+	{
+		Set coffeemaker = ##class(demo.coffemaker).%OpenId(id)
+		If 'IsObject(coffeemaker) {
+			Set %response.Status = ..#HTTP204NOCONTENT
+		} Else {
+			Set obj = {
+				"img": (coffeemaker.Img),
+				"coffeemakerID": (coffeemaker.CoffemakerID),
+				"name": (coffeemaker.Name),
+				"brand": (coffeemaker.Brand),
+				"color": (coffemaker.Color),
+				"numcups": (coffeemaker.NumCups),
+				"price": (coffemaker.Price)
+			}
+			Write obj.%ToJSON()
+		}
+		Quit $$$OK
+	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
