@@ -4,10 +4,10 @@ Class demo.CoffeeMakerRESTserver Extends %CSP.REST
 	{
 		<Routes>
 		<!--
-		<Route Url = "/class/:namespace/:classname" Method = "GET" Call="GetClass" Cors="True"/>
-		<Route Url = "/coffemaker" Method="GET" Call="GetAll"/>
+		<Route Url = "/class/:namespace/:classname" Method="GET" Call="GetClass" Cors="True"/>
 		<Map Prefix="/docserver" Foward="%Api.v1.DocServer"/>
 		-->
+		<Route Url="/coffeemakers" Method="GET" Call="GetAll"/>
 		</Routes>
 		
 	}
