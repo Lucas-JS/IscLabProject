@@ -9,11 +9,12 @@ Class demo.CoffeeMakerRESTserver Extends %CSP.REST
 		-->
 		<Route Url="/coffeemakers" Method="GET" Call="GetAll"/>
 		<Route Url="/coffeemaker/:id" Method="GET" Call="GetCoffeeMakerInfo"/>
+		<Route Url="/newcoffeemaker" Method="POST" Call="NewMaker"/>
 		</Routes>
 		
 	}
 	
-	ClassMethod GetAll() As %String
+	ClassMethod GetAll() As %Status
 	{
 	Set tArr = []
 	Set rs = ##class(%SQL.Statement).%ExecDirect(,"SELECT * FROM demo.coffeemaker")
@@ -30,7 +31,6 @@ Class demo.CoffeeMakerRESTserver Extends %CSP.REST
 		
 		}
 		Write tArr.%ToJSON()
-
 		Quit $$$OK
 	}
 	
@@ -53,6 +53,35 @@ Class demo.CoffeeMakerRESTserver Extends %CSP.REST
 		}
 		Quit $$$OK
 	}
+	
+	ClassMethod NewMaker() As %Status
+	{
+		If '..GetJSONFromRequest(.obj) {
+			Set %response.Status = ..#HTTP400BADREQUEST
+			Set error = {"errormessage": "JSON not found"}
+			Write error.%ToJSON()
+			Quit $$$OK
+		}
+		
+		If '..ValidateJSON(obj,.error) {
+			Set %response.Status = ..#HTTP400BADREQUEST
+			Write error.%ToJSON()
+			Quit $$$OK
+		}
+		
+		Set cm = ##class(demo.coffeemaker).%New()
+		Do ..CopyToCoffeemakerFromJSON(.cm,obj)
+		
+		Set sc = cm.%Save()
+		
+		Set result={}
+		do result.%Set("Status",$s($$$ISERR(sc):$system.Status.GetOneErrorText(sc),1:"OK"))
+		write result.%ToJSON()
+		
+		Quit sc
+		
+	}
+
 }
 
 
