@@ -39,7 +39,7 @@ Class demo.CoffeeMakerRESTserver Extends %CSP.REST
 		
 		Write tArr.%ToJSON()
 		quit $$$OK
-	}
+	} 
 
 	/*ClassMethod DeleteMaker(id As %String) As %String
 	{
