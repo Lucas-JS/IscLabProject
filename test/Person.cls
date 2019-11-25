@@ -17,6 +17,8 @@ Class test.Person Extends (%Persistent,%Populate)
 		write !, ..Name, "'s phone number is: ", ..Phone, "."
 		write !, ..Name, " is ", ..Age, " years old." 
 	}
+	
+	Parameter PLANET = "Earth";
  
 Storage Default
 {
