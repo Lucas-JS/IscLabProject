@@ -19,6 +19,7 @@ Class test.Person Extends (%Persistent,%Populate)
 	}
 	
 	Parameter PLANET = "Earth";
+	// adicionando um commit
  
 Storage Default
 {
