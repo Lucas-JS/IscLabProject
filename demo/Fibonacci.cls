@@ -2,6 +2,16 @@
 Class demo.Fibonacci Extends %RegisteredObject
 {
 
+ClassMethod Main(pValue)
+	{
+		Set num = pValue
+		For i = 1 : 1 : num {
+			Set obj = ##class(Custom.Tr.Classe.Fibonacci).%New()
+			Set resultado = obj.FibCalc(i)
+			Write "O "_i_" termo de fibonacci eh: "_resultado,!
+		}
+	}
+
 Method FibCalc(pFator As %Integer) As %Integer
 	{
 		// x(n) = x(n-1) + x(n-2)
